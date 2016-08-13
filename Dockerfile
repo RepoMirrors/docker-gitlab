@@ -7,14 +7,14 @@ ENV GITLAB_VERSION=8.10.5 \
     GITLAB_WORKHORSE_VERSION=0.7.8 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
-    GITLAB_LOG_DIR="/var/log/gitlab" \
+    GITLAB_LOG_DIR="/data/log/gitlab" \
     GITLAB_CACHE_DIR="/etc/docker-gitlab" \
     RAILS_ENV=production
 
 ENV GITLAB_INSTALL_DIR="${GITLAB_HOME}/gitlab" \
     GITLAB_SHELL_INSTALL_DIR="${GITLAB_HOME}/gitlab-shell" \
     GITLAB_WORKHORSE_INSTALL_DIR="${GITLAB_HOME}/gitlab-workhorse" \
-    GITLAB_DATA_DIR="${GITLAB_HOME}/data" \
+    GITLAB_DATA_DIR="/data" \
     GITLAB_BUILD_DIR="${GITLAB_CACHE_DIR}/build" \
     GITLAB_RUNTIME_DIR="${GITLAB_CACHE_DIR}/runtime"
 
@@ -48,7 +48,7 @@ RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 22/tcp 80/tcp 443/tcp
 
-VOLUME ["${GITLAB_DATA_DIR}", "${GITLAB_LOG_DIR}"]
+VOLUME ["/data"]
 WORKDIR ${GITLAB_INSTALL_DIR}
 ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["app:start"]
